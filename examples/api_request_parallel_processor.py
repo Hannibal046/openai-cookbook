@@ -297,8 +297,8 @@ class APIRequest:
             if self.attempts_left:
                 retry_queue.put_nowait(self)
             else:
-                logging.error(f"Request {self.request_json} failed after all attempts. Saving errors: {self.result}")
-                append_to_jsonl([self.request_json, self.result], save_filepath)
+                logging.error(f"Request {self.request_json} failed after all attempts. Saving errors: {self.result}"
+                append_to_jsonl([self.request_json, [str(e) for e in self.result]], save_filepath)
                 status_tracker.num_tasks_in_progress -= 1
                 status_tracker.num_tasks_failed += 1
         else:
